@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>基础与前沿研究院</title>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<style>
+			.top-nav{
+				padding: 1em 0;
+			}
+
+			.navbar{
+				margin-bottom: 0;
+			}
+
+			#main-nav li a{
+				color: #fff;
+			}
+
+			#main-nav .dropdown-menu a{
+				color: #333;
+			}
+
+			.navbar-nav li a:hover{
+				display: block;
+				background: #d55;
+			}
+
+			.navbar-nav .dropdown-menu li a:hover{
+				display: block;
+				background: #eee;
+			}
+
+			.nav .open>a,
+			.nav .open>a:hover,
+			.nav .open>a:focus {
+				background-color: #d55;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header">
+			<!--顶部导航栏-->
+			<div class="top-nav" style="background-color: #960c1d;">
+				<div class="container">
+					<nav class="navbar">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<a class="img-responsive" href="index.php">
+									<img src="__TMPL__Public/assets/images/iffs/logo2.png" style="padding: 1em 0;">
+								</a>
+							</div>
+
+							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+								<ul class="nav navbar-nav navbar-right">
+									<h5>
+										<a href="index.php" style="padding: 1em 1em 0 1em; color: #fff;">中文</a> |
+										<a href="../en_US/index.php" style="padding: 1em 1em 0 1em; color: #fff;">English</a>
+									</h5>
+
+									<li>
+										<form class="navbar-form navbar-left">
+											<div class="form-group">
+												<input type="text" class="form-control input-sm" placeholder="Search">
+											</div>
+											<button type="submit" class="btn btn-default btn-sm">搜索</button>
+										</form>
+									</li>
+								</ul>
+							</div>
+							<!-- /.navbar-collapse -->
+						</div>
+						<!-- /.container-fluid -->
+					</nav>
+				</div>
+			</div>
+
+			<!--主导航栏-->
+			<div class="main-nav" style="background-color: #cc0a1d;">
+				<div class="container">
+					<nav class="navbar">
+						<div class="container-fluid">
+							<div class="collapse navbar-collapse">
+								<php>
+									$menu_root_ul_id="main-nav";
+									$filetpl="<a href='\$href' target='\$target'>\$label</a>";
+									$foldertpl="<a class='dropdown-toggle' href='\$href' target='\$target' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>\$label <span class='caret'></span></a>";
+									$ul_class="dropdown-menu" ;/*内部ul标签的class属性值*/
+									$li_class="" ;/*内部li标签的class属性值*/
+									$menu_root_ul_class="nav navbar-nav";/*菜单根节点ul标签的class属性值*/
+									$showlevel=3;/*显示菜单的层级*/
+									$dropdown='dropdown';/*含有子菜单的li标签的class属性值,用于控制多级菜单的折叠*/
+								</php>
+
+								{:sp_get_menu("main",$menu_root_ul_id,$filetpl,$foldertpl,$ul_class,$li_class,$menu_root_ul_class,$showlevel,$dropdown)}
+							</div>
+							<!-- /.navbar-collapse -->
+						</div>
+						<!-- /.container-fluid -->
+					</nav>
+				</div>
+			</div>
+		</div>

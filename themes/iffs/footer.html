@@ -1,0 +1,24 @@
+</body>
+<script src="http://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    $(function() {
+        // var l_height = $('#slider-left').height();
+        // var r_height = $('#slider-right').height();
+        // var height = l_height > r_height ? l_height : r_height;
+
+        // var title_height = $('#slider-title').height();
+
+        // $('#slider-abstract').height(height - title_height);i]);
+        $('#slide-title-content').text($('.active #slide_title').text());
+        $('#slider-abstract-content').text($('.active #slide_content').text());
+
+        $('#carousel-example-generic').on('slid.bs.carousel', function() {
+            $('#slide-title-content').text($('.active #slide_title').text());
+            $('#slider-abstract-content').text($('.active #slide_content').text());
+        });
+    });
+</script>
+
+</html>
