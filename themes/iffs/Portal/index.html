@@ -3,7 +3,8 @@
 <div class="container" style="margin-top: 3em;">
     <!--轮播图-->
     <php>
-        $slide = sp_getslide('main'); $first_slide = min($slide);
+        $slide = sp_getslide('main'); 
+        $first_slide = min($slide);
     </php>
     <div class="slider row">
         <!--轮播图左半部分——显示图片-->
@@ -11,13 +12,13 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <php>
-                        for($i=0;$i<count($slide);$i++){
-                            if($i == 0){
-                                echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"".$i."\" class=\"active\"></li> ";
+                        for($i=0;$i<count($slide);$i++){ 
+                            if($i==0){ 
+                                echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"".$i."\" class=\"active\"></li> "; 
                             }else{
-                                echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"".$i."\"></li> ";
-                            }
-                        }
+                                echo "<li data-target=\"#carousel-example-generic\" data-slide-to=\"".$i."\"></li> "; 
+                            } 
+                        } 
                     </php>
                 </ol>
 
@@ -38,10 +39,6 @@
                             </div>
                         </if>
                     </foreach>
-                    <script>
-                        static
-                        var data_slide_no = 0;
-                    </script>
                 </div>
 
                 <!-- Controls -->
@@ -66,6 +63,80 @@
             <!--显示摘要-->
             <div class="row bg-grey font-white" id="slider-abstract" style="padding: 1em 2em; background-color: #ccc; height: 384px;">
                 <p style="padding: 1em 1em;" id="slider-abstract-content"></p>
+            </div>
+        </div>
+    </div>
+
+    <!--最新资讯-->
+    <div class="row" id="latest_news">
+        <!--新闻类资讯-->
+        <php>
+            $tag_rec = 'cid:4;field:object_id,term_id,post_title,post_excerpt,post_date,smeta;limit:1;order:post_date DESC';
+            $where_rec = ['post_status' => 1, 'istop' => 1, 'recommended' => 1];
+            $posts_rec = sp_sql_posts($tag_rec, $where_rec);
+
+            $recommended_id = $posts_rec[0]['object_id'];
+
+            $tag = 'cid:4;field:object_id,term_id,post_title,post_excerpt,post_date;limit:5;order:istop DESC, recommended DESC, post_date DESC';
+            $where = ['post_status' => 1, 'object_id' => array('NEQ', $recommended_id)];
+            $posts = sp_sql_posts($tag, $where);
+        </php>
+        <div class="col-md-8" style="padding-left: 0;">
+            <h3 style="margin-top: 2em; margin-bottom: 1em;">最新资讯</h3>
+            <div class="list-group">
+                <volist name="posts_rec" id="vo_rec">
+                    <php>
+                        $smeta = json_decode($vo_rec['smeta'], true);
+                    </php>
+                    <a href="#" class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                    <img class="media-object" src="{$smeta['thumb']|sp_get_asset_upload_path}" style="width: 192px; height: 128px;">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading" style="padding: 0.5em 0.5em;">{$vo_rec.post_title}<small class="pull-right">{$vo_rec.post_date|strtotime|date="Y-m-d",###}</small></h4>
+                                <h5 style="padding: 0 0.5em;">{$vo_rec.post_excerpt}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </volist>
+
+                <volist name="posts" id="vo">
+                    <a href="#" class="list-group-item">
+                        <div class="media">
+                            <div class="media-body">
+                                <h5 class="media-heading">{$vo.post_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></h5>
+                            </div>
+                        </div>
+                    </a>
+                </volist>
+            </div>
+        </div>
+
+        <!--通知类资讯-->
+        <php>
+            $tag = 'field:object_id,term_id,post_title,post_excerpt,post_date,istop,recommended;limit:6;order:istop DESC, recommended DESC, post_date DESC';
+            $where = ['post_status' => 1];
+            $posts = sp_sql_posts_bycatid(5, $tag, $where);
+
+            function get_useful_title($str){
+                if(mb_strlen($str) > 15){
+                    $str = mb_substr($str, 0, 16, 'utf-8')."...";
+                }
+                return $str;
+            }
+        </php>
+        <div class="col-md-4" style="padding-right: 0; margin-top: 2.25em;">
+            <div class="list-group">
+                <h3 class="list-group-item text-center" style="padding: 0.75em 0;">通知公告</h3>
+                <volist name="posts" id="vo">
+                    <if condition="($vo.istop eq 1) AND ($vo.recommended eq 1)"><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span> <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.istop eq 1" /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.recommended eq 1" /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <else /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                    </if>
+                </volist>
+                <div href="#" class="list-group-item"><button class="btn btn-primary btn-sm">更多公告</button></div>
             </div>
         </div>
     </div>

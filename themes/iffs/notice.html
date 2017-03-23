@@ -7,22 +7,20 @@
                 <div class="col-md-3">
                     <ul class="list-group text-center">
                         <li class="list-group-item bg-lightmain title-white"><h3>通知公告</h3></li>
-                        <a href="http://localhost/ThinkCMFX/index.php?m=list&a=index&id=6" class="list-group-item">人事通知</a>
-                        <a href="http://localhost/ThinkCMFX/index.php?m=list&a=index&id=7" class="list-group-item">外事通知</a>
-                        <a href="http://localhost/ThinkCMFX/index.php?m=list&a=index&id=8" class="list-group-item">学生工作通知</a>
-                        <a href="http://localhost/ThinkCMFX/index.php?m=list&a=index&id=9" class="list-group-item">科研通知</a>
+                        <a href="#" class="list-group-item">人事通知</a>
+                        <a href="#" class="list-group-item">外事通知</a>
+                        <a href="#" class="list-group-item">学生工作通知</a>
+                        <a href="#" class="list-group-item">科研通知</a>
                     </ul>
                 </div>
 
                 <php>
-					$cat_id=$_GET['id'];
-					$tag = 'cid:'.$cat_id.';field:post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc';
-                    $posts_tongzhi=sp_sql_posts_paged($tag,'',2);
+                    $posts_tongzhi=sp_sql_posts_paged_bycatid('cid:7;field:post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc','',5);
                 </php>
 
                 <!--右侧人员资料栏-->
                 <div class="col-md-9" >
-                    <img src="__TMPL__Public/assets/images/iffs/title_bg.jpg" style="width: 100%;">
+                    <img src="__TMPL__Public/assets/images/title_bg.jpg" style="width: 100%;">
 
                     <div class="page-header">
                         <h2 class="title-black">通知公告</h2>
