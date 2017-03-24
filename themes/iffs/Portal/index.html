@@ -88,7 +88,7 @@
                     <php>
                         $smeta = json_decode($vo_rec['smeta'], true);
                     </php>
-                    <a href="#" class="list-group-item">
+                    <a href="{:leuu('article/index',array('id'=>$vo_rec['object_id'], 'cid'=>$vo_rec['term_id']))}" class="list-group-item">
                         <div class="media">
                             <div class="media-left">
                                     <img class="media-object" src="{$smeta['thumb']|sp_get_asset_upload_path}" style="width: 192px; height: 128px;">
@@ -102,7 +102,7 @@
                 </volist>
 
                 <volist name="posts" id="vo">
-                    <a href="#" class="list-group-item">
+                    <a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">
                         <div class="media">
                             <div class="media-body">
                                 <h5 class="media-heading">{$vo.post_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></h5>
@@ -130,10 +130,10 @@
             <div class="list-group">
                 <h3 class="list-group-item text-center" style="padding: 0.75em 0;">通知公告</h3>
                 <volist name="posts" id="vo">
-                    <if condition="($vo.istop eq 1) AND ($vo.recommended eq 1)"><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span> <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
-                        <elseif condition="$vo.istop eq 1" /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
-                        <elseif condition="$vo.recommended eq 1" /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
-                        <else /><a href="$" class="list-group-item">{$vo.post_title|get_useful_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                    <if condition="($vo.istop eq 1) AND ($vo.recommended eq 1)"><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span> <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.istop eq 1" /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.recommended eq 1" /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <else /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
                     </if>
                 </volist>
                 <div href="#" class="list-group-item"><button class="btn btn-primary btn-sm">更多公告</button></div>
