@@ -1,19 +1,25 @@
 <tc_include file="header" />
 
 <!--页面主体-->
-<div class="container" style="padding: 3em 0; min-height: 768px;">
+<div class="container" style="margin: 3em auto; min-height: 768px;">
     <div class="row">
-        <!--左侧导航菜单-->
-        <div class="col-md-3">
-            <ul class="list-group text-center">
-                <li class="list-group-item bg-lightmain title-white">
-                    <h3>通知公告</h3>
-                </li>
-                <a href="http://localhost/thinkcmfx/index.php?m=list&a=index&id=6" class="list-group-item">人事通知</a>
-                <a href="http://localhost/thinkcmfx/index.php?m=list&a=index&id=7" class="list-group-item">外事通知</a>
-                <a href="http://localhost/thinkcmfx/index.php?m=list&a=index&id=8" class="list-group-item">学生工作通知</a>
-                <a href="http://localhost/thinkcmfx/index.php?m=list&a=index&id=9" class="list-group-item">科研通知</a>
-            </ul>
+        <php>
+            $menu = sp_get_term($_GET['id']); $menu_root = substr($menu['path'], 2, 1); $terms_parent = sp_get_term($menu_root); $terms = sp_get_all_child_terms($menu_root);
+        </php>
+        <div class="col-md-3" style="padding-right: 1em;">
+            <div class="list-group">
+                <h3 class="list-group-item text-center" style="padding: 0.75em 0;">{$terms_parent['name']}</h3>
+                <volist name="terms" id="vo">
+                    <a href="{:leuu('list/index',array('id'=>$vo['term_id']))}" class="list-group-item">{$vo.name}</a>
+                </volist>
+                <volist name="posts" id="vo">
+                    <if condition="($vo.istop eq 1) AND ($vo.recommended eq 1)"><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span> <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.istop eq 1" /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <elseif condition="$vo.recommended eq 1" /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                        <else /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
+                    </if>
+                </volist>
+            </div>
         </div>
 
         <php>
@@ -21,7 +27,7 @@
         </php>
 
         <!--右侧人员资料栏-->
-        <div class="col-md-9">
+        <div class="col-md-9" style="padding-top: 1.5em;">
             <img src="__TMPL__Public/assets/images/iffs/title_bg.jpg" style="width: 100%;">
 
             <div class="page-header">
@@ -35,7 +41,7 @@
                     </php>
 
                     <a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">
-                        <h5 class="title-main">{$vo.post_title}<small class="pull-right">{$vo.post_date}</small></h5>
+                        <h5 class="title-main">{$vo.post_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></h5>
                     </a>
                 </foreach>
 

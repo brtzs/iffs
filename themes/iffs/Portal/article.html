@@ -1,9 +1,15 @@
 <tc_include file="header" />
-<div class="container">
-	<div class="row">
-		<div class="col-md-3" style="padding-right: 0; margin-top: 2.25em;">
+<div class="container" style="margin-top: 2em;">
+    <div class="row">
+        <php>
+            $menu = sp_get_term($_GET['cid']); $menu_root = substr($menu['path'], 2, 1); $terms_parent = sp_get_term($menu_root); $terms = sp_get_all_child_terms($menu_root);
+        </php>
+        <div class="col-md-3" style="padding-right: 0; padding-right: 1em;">
             <div class="list-group">
-                <h3 class="list-group-item text-center" style="padding: 0.75em 0;">新闻通知</h3>
+                <h3 class="list-group-item text-center" style="padding: 0.75em 0;">{$terms_parent['name']}</h3>
+                <volist name="terms" id="vo">
+                    <a href="{:leuu('list/index',array('id'=>$vo['term_id']))}" class="list-group-item">{$vo.name}</a>
+                </volist>
                 <volist name="posts" id="vo">
                     <if condition="($vo.istop eq 1) AND ($vo.recommended eq 1)"><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span> <span class="label label-danger">重要</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
                         <elseif condition="$vo.istop eq 1" /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title} <span class="label label-warning">置顶</span><small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
@@ -11,25 +17,22 @@
                         <else /><a href="{:leuu('article/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}" class="list-group-item">{$vo.post_title|get_useful_title}<small class="pull-right">{$vo.post_date|strtotime|date="Y-m-d",###}</small></a>
                     </if>
                 </volist>
-                <div href="#" class="list-group-item"><button class="btn btn-primary btn-sm">更多公告</button></div>
             </div>
         </div>
 
-		<div class="col-md-9">
-			<div class="tc-box first-box article-box">
-		    	<h2>{$post_title}</h2>
-		    	<div class="article-infobox">
-		    		<span>发布时间：{$post_date}</span>
-					<span>发布者：{$user_nicename|default=$user_login}</span>
-		    		<span>
-		    			<a href="javascript:;"><i class="fa fa-eye"></i><span>浏览量：{$post_hits}</span></a>
-					</span>
-		    	</div>
-		    	<hr>
-		    	<div id="article_content">
-		    	{$post_content}
-		    	</div>
-		    </div>
-		</div>
-	</div>
-<tc_include file="footer" />
+        <div class="col-md-9">
+            <div class="tc-box first-box article-box">
+                <h2>{$post_title}</h2>
+                <div class="article-infobox">
+                    <span><i class="fa fa-clock-o" aria-hidden="true"></i> 发布时间：{$post_date|strtotime|date="Y-m-d",###} </span>
+                    <span style="margin-left: 6em;"><i class="fa fa-user" aria-hidden="true"></i> 发布者：{$user_nicename|default=$user_login} </span>
+                    <span style="margin-left: 6em;"><i class="fa fa-eye" aria-hidden="true"></i> 浏览量：{$post_hits} </span>
+                </div>
+                <hr>
+                <div id="article_content">
+                    {$post_content}
+                </div>
+            </div>
+        </div>
+    </div>
+    <tc_include file="footer" />
