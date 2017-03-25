@@ -4,7 +4,9 @@
 <div class="container" style="margin: 3em auto; min-height: 768px;">
     <div class="row">
         <php>
-            $menu = sp_get_term($_GET['id']); $menu_root = substr($menu['path'], 2, 1); $terms_parent = sp_get_term($menu_root); $terms = sp_get_all_child_terms($menu_root);
+            $menu = sp_get_term($_GET['id']); $menu_root = substr($menu['path'], 2, 1);
+            $terms_parent = sp_get_term($menu_root);
+            $terms = sp_get_all_child_terms($menu_root);
         </php>
         <div class="col-md-3" style="padding-right: 1em;">
             <div class="list-group">

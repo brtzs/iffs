@@ -57,6 +57,15 @@
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
         }
+
+        /* 图标颜色 */
+        .icon-pink{
+            color: #d55;
+        }
+
+        .icon-yellow{
+            color: #f90;
+        }
     </style>
 </head>
 
@@ -105,10 +114,14 @@
                     <div class="container-fluid">
                         <div class="collapse navbar-collapse">
                             <php>
-                                $menu_root_ul_id="main-nav"; $filetpl="
-                                <a href='\$href' target='\$target'>\$label</a>"; $foldertpl="
-                                <a class='dropdown-toggle' href='\$href' target='\$target' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>\$label <span class='caret'></span></a>"; $ul_class="dropdown-menu" ;/*内部ul标签的class属性值*/
-                                $li_class="" ;/*内部li标签的class属性值*/ $menu_root_ul_class="nav navbar-nav";/*菜单根节点ul标签的class属性值*/ $showlevel=3;/*显示菜单的层级*/ $dropdown='dropdown';/*含有子菜单的li标签的class属性值,用于控制多级菜单的折叠*/
+                                $menu_root_ul_id="main-nav";
+                                $filetpl="<a href='\$href' target='\$target'>\$label</a>";
+                                $foldertpl="<a class='dropdown-toggle' href='\$href' target='\$target' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>\$label <span class='caret'></span></a>";
+                                $ul_class="dropdown-menu" ;/*内部ul标签的class属性值*/
+                                $li_class="" ;/*内部li标签的class属性值*/
+                                $menu_root_ul_class="nav navbar-nav";/*菜单根节点ul标签的class属性值*/
+                                $showlevel=3;/*显示菜单的层级*/
+                                $dropdown='dropdown';/*含有子菜单的li标签的class属性值,用于控制多级菜单的折叠*/
                             </php>
 
                             {:sp_get_menu("main",$menu_root_ul_id,$filetpl,$foldertpl,$ul_class,$li_class,$menu_root_ul_class,$showlevel,$dropdown)}
