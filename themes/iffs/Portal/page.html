@@ -1,21 +1,26 @@
 <tc_include file="header" />
 <style>
     #article_content img{
-        margin: auto;
         width: 100%;
     }
 </style>
-
-<php>
-    $menu = sp_get_term($_GET['id']);
-    $menu_root = substr($menu['path'], 2, 1);
-    $terms_parent = sp_get_term($menu_root);
-    $terms = sp_get_all_child_terms($menu_root);
-</php>
-
-<div class="container">
+<div class="container" style="margin-top: 2em;">
     <div class="row">
-        <div class="col-md-3">
+        <php>
+            // 获取文章分类id
+            $term_id = $_GET['id'];
+
+            // 获取左侧导航菜单
+            $menu = sp_get_term($term_id);
+            $menu_root = $menu['parent'];
+            $terms_parent = sp_get_term($menu_root);
+            $terms = sp_get_all_child_terms($menu_root);
+
+            // 直接获取该分类中的第一篇文章
+            $tag = 'cid:'.$term_id.'field:post_title,post_content;limit 1';
+            $post = sp_sql_posts($tag);
+        </php>
+        <div class="col-md-3" style="padding-right: 0; padding-right: 1em;">
             <div class="list-group">
                 <h3 class="list-group-item text-center" style="padding: 0.75em 0;">{$terms_parent['name']}</h3>
                 <volist name="terms" id="vo">
@@ -30,11 +35,14 @@
                 </volist>
             </div>
         </div>
+
         <div class="col-md-9">
-            <h2>{$post_title}</h2>
-            <hr>
-            <div id="article_content">
-                {$post_content}
+            <div class="tc-box first-box article-box">
+                <h2>{$post[0]['post_title']}</h2>
+                <hr>
+                <div id="article_content">
+                    {$post[0]['post_content']}
+                </div>
             </div>
         </div>
     </div>
