@@ -1,0 +1,47 @@
+<tc_include file="header" />
+    <div class="row">
+
+        <php>
+
+            $id=$_GET['id'];
+            $post=sp_sql_post( $id,'field:post_title,post_keywords,post_source,post_excerpt,post_content,smeta,post_date;order:post_date desc');
+            $smeta=json_decode($post['smeta'],true);
+        </php>
+
+    <head>
+        <meta charset="utf-8">
+        <title>{$post.post_keywords}</title>
+    </head>
+
+    <body class="bg-lightgrey">
+
+    <!--页面主体-->
+    <div class="container" style="padding: 2em 6em;">
+        <div class="row">
+
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 2em 3em;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-responsive pull-left" src="{:sp_get_asset_upload_path($smeta['thumb'])}">
+                            </div>
+
+                            <div class="col-md-8" style="padding-top: 2em;">
+                                <h4>姓名：{$post.post_title}</h4>
+                                <h4>职称：{$post.post_keywords}</h4>
+                                <h4>电子邮箱：{$post.post_source}</h4>
+                                <h4>个人主页：<a href="{$post.post_excerpt}"> {$post.post_excerpt}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="page-header">详细信息</h3>
+                    {$post.post_content}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<tc_include file="footer" />

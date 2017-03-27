@@ -27,7 +27,7 @@ $configs= array(
         'TAGLIB_BUILD_IN' => THINKCMF_CORE_TAGLIBS,
 
         /* 允许使用的应用 */
-        'MODULE_ALLOW_LIST'  => array('Admin','Portal','Asset','Api','User','Wx','Comment','Qiushi','Tpl','Topic','Install','Bug','Better','Pay','Cas','Blog'),
+        'MODULE_ALLOW_LIST'  => array('Admin','Portal','Asset','Api','User','Wx','Comment','Qiushi','Tpl','Topic','Install','Bug','Better','Pay','Cas','Blog','Facults'),
         'TMPL_DETECT_THEME'     => false,       // 自动侦测模板主题
         'TMPL_TEMPLATE_SUFFIX'  => '.html',     // 默认模板文件后缀
         'DEFAULT_MODULE'        =>  'Portal',  // 默认模块

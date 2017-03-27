@@ -1,0 +1,264 @@
+<tc_include file="header" />
+    <div class="row">
+
+        <php>
+            $cat_id=$_GET['id'];
+            $yuanshi=sp_sql_posts( 'cid:24;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $nuobeier=sp_sql_posts( 'cid:25;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $qianren=sp_sql_posts( 'cid:26;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $qingnianqianren=sp_sql_posts( 'cid:27;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $waizhuan=sp_sql_posts( 'cid:28;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $zirankexue=sp_sql_posts( 'cid:29;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $changjiangjiangzuo=sp_sql_posts( 'cid:30;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $tangseng=sp_sql_posts( 'cid:31;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $EI=sp_sql_posts( 'cid:32;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $fada=sp_sql_posts( 'cid:33;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+            $postdoc=sp_sql_posts( 'cid:34;field:object_id,term_id,post_title,post_content,smeta,post_excerpt,post_date;order:post_date desc');
+        </php>
+
+
+
+        <!--页面主体-->
+        <div class="container" style="padding: 1em 6em;">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="list-group text-center">
+                        <h3 class="list-group-item bg-main font-white">师资队伍</h3>
+                        <a href="#" class="list-group-item">院士</a>
+                        <a href="#" class="list-group-item" style="color: #960c1d;">诺贝尔名誉教授</a>
+                        <a href="#" class="list-group-item">国家千人计划专家</a>
+                        <a href="#" class="list-group-item">国家青年千人计划入选者</a>
+                        <a href="#" class="list-group-item">国家外专短期千人计划专家</a>
+                        <a href="#" class="list-group-item">国家自然科学基金优秀青年科学基金获得者</a>
+                        <a href="#" class="list-group-item">教育部长江讲座教授</a>
+                        <a href="#" class="list-group-item">汤森路透全球高被引科学家</a>
+                        <a href="#" class="list-group-item">EIsevier中国高被引学者</a>
+                        <a href="#" class="list-group-item">发达国家院士</a>
+                        <a href="#" class="list-group-item">博士后</a>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <h2 class="title-white text-center title-withbg">师资队伍</h2>
+
+                    <div class="page-header">
+                        <h3 class="title-main">院士</h3>
+                    </div>
+                    <div class="row">
+                    <foreach name="yuanshi" item="vo">
+                        <php>
+                            $smeta=json_decode($vo['smeta'],true);
+                        </php>
+                        <div class="col-md-3">
+                            <div class="thumbnail no-radius">
+                                <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                <div class="caption text-center">
+                                    <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                </div>
+                            </div>
+                        </div>
+                    </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">诺贝尔名誉教授</h3>
+                    </div>
+                    <div class="row">
+                        <foreach name="nuobeier" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">国家千人计划专家</h3>
+                    </div>
+                    <div class="row">
+                        <foreach name="qianren" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">国家青年千人计划入选者</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="qingnianqianren" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">国家外专短期千人计划专家</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="waizhuan" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">国家自然科学基金优秀青年科学基金获得者</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="zirankexue" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">教育部长江讲座教授</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="changjiangjiangzuo" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">汤森路透全球高被引学者</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="tangseng" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">EIsevier中国高被引学者</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="EI" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">发达国家院士</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="fada" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                    <div class="page-header">
+                        <h3 class="title-main">博士后</h3>
+                    </div>
+
+                    <div class="row">
+                        <foreach name="postdoc" item="vo">
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-3">
+                                <div class="thumbnail no-radius">
+                                    <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" class="img_responsive">
+                                    <div class="caption text-center">
+                                        <a href="{:leuu('facult/index',array('id'=>$vo['object_id'], 'cid'=>$vo['term_id']))}"><h4 class="title-black">{$vo.post_title }</h4></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<tc_include file="footer" />

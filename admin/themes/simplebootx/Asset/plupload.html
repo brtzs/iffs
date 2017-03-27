@@ -72,45 +72,76 @@
 }
 </style>
 <script>
+	// 函数功能：获得已选取的文件
 	function get_selected_files(){
+		// 将tab变量赋值为图片上传的来源（本地图片、网络图片），选中哪个就把该项的附加数据取出
 		var tab = $("#uploader-tabs li.active").data('tab');
 		var files= [];
 		if(tab=='upload-file'){
+			// 如果来源是本地上传的文件，则将上传的文件对象赋值给变量$files
 			var $files=$('#files-container li.uploaded.selected');
+
+			// 如果没有上传文件，则产生提示信息
 			if($files.length==0){
 				alert('请上传文件！');
 				return false;
 			}
+
+			// 如果上传了文件，则开始遍历上传文件的信息，并赋值给$files
 			$files.each(function(){
+				// 取得当前遍历的文件对象
 				var $this=$(this);
+
+				// 取得当前遍历的文件的地址
 				var url = $this.data('url');
+
+				// 取得当前遍历的文件的前缀地址
 				var preview_url = $this.data('preview_url');
+
+				// 取得当前遍历的文件的路径
 				var filepath = $this.data('filepath');
+
+				// 取得当前遍历的文件的名称
 				var name = $this.data('name');
+
+				// 取得当前遍历的文件的序号
 				var id = $this.data('id');
+
+				// 将文件信息以json形式传出
 				files.push({url:url,preview_url:preview_url,filepath:filepath,name:name,id:id});
 			});
 		}
 		if(tab=='network-file'){
+			// 如果图片来源于网络，则获取图片的url地址
 			var url=$('#network-file-input').val();
+
+			// 如果url地址为空，产生提示信息
 			if(url==''){
 				alert('请填写文件地址！');
 				return false;
 			}
+
+			// 否则将图片的文件id加上当前时间，便于保存和区分
 			var id = "networkfile"+new Date().getTime();
+
+			// 将文件信息以json形式传出
 			files.push({url:url,preview_url:url,filepath:url,id:id});
 		}
+
+		// 返回上传的文件对象
 		return files;
 	}
 </script>
 </head>
 <body>
 	<div class="wrap" style="padding: 5px;">
+		<!--上传文件来源类型选择（可选：本地文件、网络图片）-->
 		<ul class="nav nav-tabs" id="uploader-tabs">
 			<li class="active" data-tab="upload-file"><a href="#upload-file-tab" data-toggle="tab">上传文件</a></li>
 			<li data-tab="network-file"><a href="#network-file-tab" data-toggle="tab">网络文件</a></li>
 		</ul>
 		<div class="tab-content">
+			<!--上传本地文件的样式-->
 			<div class="tab-pane active" id="upload-file-tab">
 				<div class="file-upload-btn-wrapper">
 					<!--选择按钮-->
@@ -127,11 +158,14 @@
 						<em style="cursor: help;" title="可上传格式：{$extensions}" data-toggle="tooltip">支持格式？</em>
 					</span>
 				</div>
+				<!--此处是文件预览窗口-->
 				<div class="files-wrapper">
 					<ul id="files-container">
 					</ul>
 				</div>
 			</div>
+
+			<!--上传网络文件的样式-->
 			<div class="tab-pane" id="network-file-tab">
 				请输入网络地址<br>
 				<input type="text" name="info[filename]" style="width: 600px;" placeholder="http://" id="network-file-input">
@@ -146,24 +180,48 @@
 		
 		Wind.use('plupload',function(){
 			var uploader = new plupload.Uploader({
+				// 用来指定上传方式，指定多个上传方式请使用逗号隔开。一般情况下，你不需要配置该参数，因为Plupload默认会根据你的其他的参数配置来选择最合适的上传方式。如果没有特殊要求的话，Plupload会首先选择html5上传方式，如果浏览器不支持html5，则会使用flash或silverlight，如果前面两者也都不支持，则会使用最传统的html4上传方式。如果你想指定使用某个上传方式，或改变上传方式的优先顺序，则你可以配置该参数。
 				runtimes : 'html5,flash,silverlight,html4',
-				browse_button : 'select-files', // you can pass an id...
-				container: document.getElementById('container'), // ... or DOM Element itself
+
+				// 触发文件选择对话框的DOM元素，当点击该元素后便后弹出文件选择对话框。该值可以是DOM元素对象本身，也可以是该DOM元素的id
+				browse_button : 'select-files', 
+
+				// 用来指定Plupload所创建的html结构的父容器，默认为前面指定的browse_button的父元素。该参数的值可以是一个元素的id,也可以是DOM元素本身。
+				container: document.getElementById('container'), 
+
+				// 服务器端接收和处理上传文件的脚本地址，可以是相对路径(相对于当前调用Plupload的文档)，也可以是绝对路径, 此处会生成g=asset&m=asset&a=plupload，即路径application/Asset/Controller/AssetController.class.php下的plupload()方法
 				url : "{:U('asset/asset/plupload')}",
+
+				// flash上传组件的url地址，如果是相对路径，则相对的是调用Plupload的html文档。当使用flash上传方式会用到该参数。
 				flash_swf_url : '__PUBLIC__/js/plupload/Moxie.swf',
+
+				// silverlight上传组件的url地址，如果是相对路径，则相对的是调用Plupload的html文档。当使用silverlight上传方式会用到该参数。
 				silverlight_xap_url : '__PUBLIC__/js/plupload/Moxie.xap',
+
+				// 可以使用该参数来限制上传文件的类型，大小等，该参数以对象的形式传入，它包括三个属性：
+				// mime_types：用来限定上传文件的类型，为一个数组，该数组的每个元素又是一个对象，该对象有title和extensions两个属性，title为该过滤器的名称，extensions为文件扩展名，有多个时用逗号隔开。该属性默认为一个空数组，即不做限制。
+				// max_file_size：用来限定上传文件的大小，如果文件体积超过了该值，则不能被选取。值可以为一个数字，单位为b,也可以是一个字符串，由数字和单位组成，如’200kb’
+				// prevent_duplicates：是否允许选取重复的文件，为true时表示不允许，为false时表示允许，默认为false。如果两个文件的文件名和大小都相同，则会被认为是重复的文件
 				filters : {
 					max_file_size : '{$upload_max_filesize_mb}mb'/* ,
 					mime_types: [{$mime_type}] */
 				},
+
+				// 是否可以在文件浏览对话框中选择多个文件，true为可以，false为不可以。默认true，即可以选择多个文件。需要注意的是，在某些不支持多选文件的环境中，默认值是false。比如在ios7的safari浏览器中，由于存在bug，造成不能多选文件。当然，在html4上传方式中，也是无法多选文件的。
 				multi_selection:{$multi},
+
+				// 上传时的附加参数，以键/值对的形式传入，服务器端可是使用$_POST来获取这些参数(以php为例)。
 				multipart_params:{
 					app:'{$app}'
 				},
+
+				// 当Plupload初始化完成后触发监听函数参数：(uploader)，uploader为当前的plupload实例对象
 				init: {
+					// 当Init事件发生后触发监听函数参数：(uploader)，uploader为当前的plupload实例对象
 					PostInit: function() {
 					},
-
+					
+					// 当文件添加到上传队列后触发监听函数参数：(uploader,files)，uploader为当前的plupload实例对象，files为一个数组，里面的元素为本次添加到上传队列里的文件对象
 					FilesAdded: function(up, files) {
 						plupload.each(files, function(file) {
 							var $newfile=$('\
@@ -181,10 +239,16 @@
 						uploader.start();
 					},
 
+					// 会在文件上传过程中不断触发，可以用此事件来显示上传进度监听函数参数：(uploader,file)，uploader为当前的plupload实例对象，file为触发此事件的文件对象
 					UploadProgress: function(up, file) {
 						$('#'+file.id).find('.upload-percent').text(file.percent+"%");
 					},
 					
+					// 当队列中的某一个文件上传完成后触发监听函数参数：(uploader,file,responseObject)
+					// uploader为当前的plupload实例对象，file为触发此事件的文件对象，responseObject为服务器返回的信息对象，它有以下3个属性：
+					// response：服务器返回的文本
+					// responseHeaders：服务器返回的头信息
+					// status：服务器返回的http状态码，比如200
 					FileUploaded: function(up, file, response) {
 						var data = JSON.parse(response.response);
 						if(data.status==1){
